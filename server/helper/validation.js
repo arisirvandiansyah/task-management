@@ -2,8 +2,9 @@ const validator = require("validator");
 
 exports.requestValidation = (req) => {
   const errors = {};
-  if (req.email !== undefined && !validator.isEmail(req.email)) {
-    errors.email = "Email is invalid";
+  if (req.email !== undefined) {
+    if (!validator.isEmail(req.email)) errors.email = "Email is invalid";
+    if (validator.isEmpty(req.email)) errors.email = "Email is required";
   }
   if (req.password !== undefined) {
     if (validator.isEmpty(req.password))
